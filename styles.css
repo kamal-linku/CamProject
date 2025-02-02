@@ -1,26 +1,40 @@
 /* General Styles */
+:root {
+    --primary-color: #6200ee; /* Material Design Purple */
+    --secondary-color: #03dac6; /* Material Design Teal */
+    --background-gradient: linear-gradient(to bottom, #3168df, #000000);
+    --surface-color: #ffffff;
+    --text-color: #000000;
+    --text-color-light: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', sans-serif; /* Google Font */
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #4306c7, #000000); /* Light greenish-black gradient */
-    color: #333;
+    background: var(--background-gradient);
+    color: var(--text-color-light);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    line-height: 1.6;
 }
 
 /* Camera App Container */
 .camera-app {
     width: 100%;
     max-width: 800px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
 
 /* Header */
@@ -28,73 +42,85 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background: #1ddb56;
-    color: #fff;
+    padding: 16px 24px;
+    background: var(--primary-color);
+    color: var(--text-color-light);
+    box-shadow: var(--shadow);
 }
 
 .app-header h1 {
     margin: 0;
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 1.25rem; /* Adjusted for mobile */
+    font-weight: 500; /* Medium weight */
 }
 
 .header-controls button {
-    background: rgb(251, 251, 251);
+    background: rgba(255, 255, 255, 0.1);
     border: none;
-    color: #0b0b0b;
-    padding: 10px 20px;
-    border-radius: 25px; /* Capsule-style */
+    color: var(--text-color-light);
+    padding: 8px 16px;
+    border-radius: 20px; /* Capsule-style */
     cursor: pointer;
     margin-left: 10px;
-    font-size: 14px;
-    transition: background 0.3s ease;
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500; /* Medium weight */
+    transition: var(--transition);
 }
 
 .header-controls button:hover {
-    background: rgba(43, 23, 225, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.header-controls button:active {
+    transform: scale(0.98);
 }
 
 /* Camera Feed */
 .camera-feed {
     width: 100%;
-    height: 500px;
+    height: calc(100vh - 150px); /* Adjusted for mobile */
     background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative;
 }
 
 video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
 /* Controls */
 .controls {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    padding: 20px;
-    background: #47de3c;
-    border-top: 1px solid #eee;
+    gap: 16px;
+    padding: 16px;
+    background: var(--surface-color);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .controls button {
-    background: #fcfdfd;
+    background: var(--primary-color);
     border: none;
-    color: #000000;
+    color: var(--text-color-light);
     padding: 12px 24px;
-    border-radius: 25px; /* Capsule-style */
+    border-radius: 20px; /* Capsule-style */
     cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease, transform 0.2s ease;
+    font-size: 1rem; /* 16px */
+    font-weight: 500; /* Medium weight */
+    transition: var(--transition);
+    flex: 1 1 45%; /* Adjusted for mobile */
+    margin: 5px;
 }
 
 .controls button:hover {
-    background: #0056b3;
+    background: #3700b3; /* Darker shade of primary color */
     transform: translateY(-2px);
 }
 
@@ -104,11 +130,12 @@ video {
 
 /* Capture Button */
 .capture-button {
-    background: #28a745;
+    background: var(--secondary-color);
+    color: var(--text-color);
 }
 
 .capture-button:hover {
-    background: #218838;
+    background: #018786; /* Darker shade of secondary color */
 }
 
 /* Responsive Design */
@@ -119,7 +146,7 @@ video {
     }
 
     .camera-feed {
-        height: 70vh;
+        height: calc(100vh - 150px); /* Adjusted for mobile */
     }
 
     .controls {
