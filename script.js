@@ -34,10 +34,6 @@ document.getElementById('capture').addEventListener('click', () => {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    if (isInverted) {
-        invertColors();
-    }
 });
 
 // Save image
@@ -62,37 +58,16 @@ document.getElementById('zoom-out').addEventListener('click', () => {
     video.style.transform = `scale(${zoomLevel})`;
 });
 
-// Invert colors
+// Invert colors on live camera
 document.getElementById('invert-color').addEventListener('click', () => {
     isInverted = !isInverted;
-    if (isInverted) {
-        invertColors();
-    } else {
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    }
+    video.style.filter = isInverted ? 'invert(1)' : 'invert(0)';
 });
-
-function invertColors() {
-    let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    let data = imageData.data;
-
-    for (let i = 0; i < data.length; i += 4) {
-        data[i] = 255 - data[i];     // Red
-        data[i + 1] = 255 - data[i + 1]; // Green
-        data[i + 2] = 255 - data[i + 2]; // Blue
-    }
-
-    context.putImageData(imageData, 0, 0);
-}
 
 // Toggle flash (not supported in all browsers)
 document.getElementById('flash').addEventListener('click', () => {
     isFlashOn = !isFlashOn;
-    if (isFlashOn) {
-        video.style.filter = 'brightness(150%)';
-    } else {
-        video.style.filter = 'brightness(100%)';
-    }
+    video.style.filter = isFlashOn ? 'brightness(150%)' : 'brightness(100%)';
 });
 
 // Start with the rear camera by default
