@@ -18,6 +18,7 @@ function startCamera(facingMode) {
     }).then(stream => {
         currentStream = stream;
         video.srcObject = stream;
+        requestAnimationFrame(processFrame);
     }).catch(error => {
         console.error("Error accessing the camera: ", error);
     });
@@ -61,8 +62,27 @@ document.getElementById('zoom-out').addEventListener('click', () => {
 // Invert colors on live camera
 document.getElementById('invert-color').addEventListener('click', () => {
     isInverted = !isInverted;
-    video.style.filter = isInverted ? 'invert(1)' : 'invert(0)';
 });
+
+function processFrame() {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    if (isInverted) {
+        let imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+
+        for (let i = 0; i < data.length; i += 4) {
+            data[i] = 255 - data[i];       // Red
+            data[i + 1] = 255 - data[i + 1]; // Green
+            data[i + 2] = 255 - data[i + 2]; // Blue
+        }
+
+        context.putImageData(imageData, 0, 0);
+    }
+    requestAnimationFrame(processFrame);
+}
 
 // Toggle flash (not supported in all browsers)
 document.getElementById('flash').addEventListener('click', () => {
